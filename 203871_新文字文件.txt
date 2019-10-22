@@ -1,0 +1,10 @@
+# !/bin/bash
+
+ip=$(docker logs my_wordpress_1 | grep Hydra | grep POST | awk {'print $1'} | sort | uniq)
+
+if [ -z "$ip" ]; then
+    echo -e "\n!There's no people using hydra to hack you."
+else
+    time=$(docker logs my_wordpress_1 | grep Hydra | grep POST | grep -c $ip)
+    echo -e "\n! YOU BEEN HACKED:\n  - hacker IP: $ip\n  - brute forse time: $time"
+fi
